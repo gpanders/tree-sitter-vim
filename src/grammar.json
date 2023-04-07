@@ -2020,7 +2020,7 @@
     },
     "_heredoc_line": {
       "type": "PATTERN",
-      "value": "[^\\n]*\\n"
+      "value": "(|[^.]|[^\\n][^\\n]+)\\n"
     },
     "script": {
       "type": "SEQ",
@@ -2060,13 +2060,22 @@
           "value": "body"
         },
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_heredoc_end"
-          },
-          "named": true,
-          "value": "endmarker"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_heredoc_end"
+              },
+              "named": true,
+              "value": "endmarker"
+            },
+            {
+              "type": "STRING",
+              "value": "."
+            }
+          ]
         }
       ]
     },

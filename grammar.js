@@ -315,14 +315,14 @@ module.exports = grammar({
 
     chunk: ($) => /<|(<[^\n<]|[^\s<])[^\n]*/,
 
-    _heredoc_line: ($) => /[^\n]*\n/,
+    _heredoc_line: ($) => /(|[^.]|[^\n][^\n]+)\n/,
 
     script: ($) =>
       seq(
         "<<",
         choice(alias($._script_heredoc_marker, $.marker_definition), "\n"),
         alias(repeat($._heredoc_line), $.body),
-        alias($._heredoc_end, $.endmarker)
+        choice(alias($._heredoc_end, $.endmarker), "."),
       ),
 
     for_loop: ($) =>
